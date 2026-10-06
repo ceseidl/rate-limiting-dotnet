@@ -7,7 +7,8 @@ namespace RateLimitApi;
 
 public static class Rejeicao
 {
-    // Quando o limite estoura: 429 + Retry-After.
+    // EN: When the limit is exceeded: 429 + Retry-After.
+    // PT: Quando o limite estoura: 429 + Retry-After.
     public static async ValueTask Responder(
         OnRejectedContext contexto, CancellationToken ct)
     {
@@ -26,8 +27,9 @@ public static class Rejeicao
         await resposta.WriteAsJsonAsync(new ProblemDetails
         {
             Status = codigo,
-            Title = "Muitas requisições",
-            Detail = "Limite excedido. Tente de novo mais tarde."
+            Title = "Too many requests / Muitas requisições",
+            Detail = "Limit exceeded. Try again later. / "
+                + "Limite excedido. Tente de novo mais tarde."
         }, ct);
     }
 }

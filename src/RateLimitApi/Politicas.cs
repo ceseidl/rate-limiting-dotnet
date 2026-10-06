@@ -17,11 +17,13 @@ public static class Politicas
         {
             options.OnRejected = Rejeicao.Responder;
 
-            // Limite global por IP: rede de segurança geral.
+            // EN: Global limit per IP: a general safety net.
+            // PT: Limite global por IP: rede de segurança geral.
             options.GlobalLimiter = PartitionedRateLimiter
                 .Create<HttpContext, string>(LimitePorIp);
 
-            // 1. Janela fixa: 5 requisições a cada 10 s.
+            // EN: 1. Fixed window: 5 requests every 10 s.
+            // PT: 1. Janela fixa: 5 requisições a cada 10 s.
             options.AddFixedWindowLimiter(Fixa, o =>
             {
                 o.PermitLimit = 5;
@@ -29,8 +31,10 @@ public static class Politicas
                 o.QueueLimit = 0;
             });
 
-            // 2. Janela deslizante: mesma cota, mas a janela
-            //    é dividida em 5 segmentos que deslizam.
+            // EN: 2. Sliding window: same quota, but the window
+            // EN:    is split into 5 segments that slide.
+            // PT: 2. Janela deslizante: mesma cota, mas a janela
+            // PT:    é dividida em 5 segmentos que deslizam.
             options.AddSlidingWindowLimiter(Deslizante, o =>
             {
                 o.PermitLimit = 5;
@@ -39,8 +43,10 @@ public static class Politicas
                 o.QueueLimit = 0;
             });
 
-            // 3. Token bucket: rajada de até 5 e reposição
-            //    de 1 token a cada 2 s.
+            // EN: 3. Token bucket: burst of up to 5, refilled
+            // EN:    by 1 token every 2 s.
+            // PT: 3. Token bucket: rajada de até 5 e reposição
+            // PT:    de 1 token a cada 2 s.
             options.AddTokenBucketLimiter(Balde, o =>
             {
                 o.TokenLimit = 5;
@@ -49,14 +55,16 @@ public static class Politicas
                 o.QueueLimit = 0;
             });
 
-            // 4. Concorrência: no máximo 2 em andamento.
+            // EN: 4. Concurrency: at most 2 in flight.
+            // PT: 4. Concorrência: no máximo 2 em andamento.
             options.AddConcurrencyLimiter(Concorrencia, o =>
             {
                 o.PermitLimit = 2;
                 o.QueueLimit = 0;
             });
 
-            // 5. Por cliente: cada chave tem a sua própria cota.
+            // EN: 5. Per client: each key has its own quota.
+            // PT: 5. Por cliente: cada chave tem a sua própria cota.
             options.AddPolicy(PorCliente, http =>
             {
                 var (chave, limite) = Clientes.Identificar(http);

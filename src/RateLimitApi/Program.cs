@@ -7,7 +7,8 @@ builder.Services.AddPoliticasDeLimite();
 
 var app = builder.Build();
 
-// A ordem importa: o limitador precisa vir antes dos endpoints.
+// EN: Order matters: the limiter must come before the endpoints.
+// PT: A ordem importa: o limitador precisa vir antes dos endpoints.
 app.UseRateLimiter();
 
 static IResult Ok(string politica) => Results.Ok(new
@@ -35,7 +36,8 @@ app.MapGet("/lento", async () =>
 app.MapGet("/cliente", () => Ok(Politicas.PorCliente))
     .RequireRateLimiting(Politicas.PorCliente);
 
-// Health check fora do limite global e das políticas.
+// EN: Health check outside the global limit and the policies.
+// PT: Health check fora do limite global e das políticas.
 app.MapGet("/saude", () => Results.Ok("ok"))
     .DisableRateLimiting();
 

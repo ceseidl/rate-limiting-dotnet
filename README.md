@@ -2,6 +2,15 @@
 
 English | [Português](README.pt-BR.md)
 
+> **Quick start**
+
+```bash
+dotnet run --project src/RateLimitApi    # terminal 1: the API on http://localhost:5080
+dotnet run --project src/RateLimitDemo   # terminal 2: the demo
+```
+
+Needs only the .NET 10 SDK. Details in [Run](#run).
+
 A runnable .NET 10 example of the built-in ASP.NET Core **rate limiting middleware** (`Microsoft.AspNetCore.RateLimiting`):
 
 - The **four built-in algorithms**: fixed window, sliding window, token bucket and concurrency.
@@ -57,22 +66,24 @@ Every route also goes through a **global limiter** of 120 requests per minute pe
 ## Expected output
 
 ```
-Janela fixa (5/10s) x7            200 200 200 200 200 429 429
-                                  Retry-After: 10s
-Janela deslizante x7              200 200 200 200 200 429 429
-Token bucket x7                   200 200 200 200 200 429 429
-                                  Retry-After: 2s
-Token bucket após 4,5 s x3        200 200 429
-                                  Retry-After: 2s
-Concorrência (2), 4 paralelas     200 429 200 429
-free-1 (3/10s) x5                 200 200 200 429 429
-                                  Retry-After: 10s
-free-2 (outro cliente) x2         200 200
-premium-1 (10/10s) x5             200 200 200 200 200
-/saude (sem limite) x3            200 200 200
+Waiting for the API at / Aguardando a API em localhost:5080 ...
+
+Fixed window / Janela fixa (5/10s) x7                         200 200 200 200 200 429 429
+                                                              Retry-After: 10s
+Sliding window / Janela deslizante x7                         200 200 200 200 200 429 429
+Token bucket x7                                               200 200 200 200 200 429 429
+                                                              Retry-After: 2s
+Token bucket after / após 4.5 s x3                            200 200 429
+                                                              Retry-After: 2s
+Concurrency / Concorrência (2), 4 parallel / paralelas        200 429 200 429
+free-1 (3/10s) x5                                             200 200 200 429 429
+                                                              Retry-After: 10s
+free-2 (other client / outro cliente) x2                      200 200
+premium-1 (10/10s) x5                                         200 200 200 200 200
+/saude (no limit / sem limite) x3                             200 200 200
 ```
 
-The order of the concurrent responses may vary. The demo is meant to be run once per minute or so, because of the global limit.
+The order of the concurrent responses may vary. The `429` body is a `ProblemDetails` JSON with a bilingual title and detail (`Too many requests / Muitas requisições`). The demo is meant to be run once per minute or so, because of the global limit.
 
 ## Things worth knowing
 

@@ -2,8 +2,10 @@ namespace RateLimitApi;
 
 public static class Clientes
 {
-    // Define QUEM é limitado (a chave da partição) e
-    // QUANTO ele pode (o plano).
+    // EN: Defines WHO is limited (the partition key) and
+    // EN: HOW MUCH they can do (the plan).
+    // PT: Define QUEM é limitado (a chave da partição) e
+    // PT: QUANTO ele pode (o plano).
     public static (string Chave, int Limite) Identificar(
         HttpContext http)
     {
