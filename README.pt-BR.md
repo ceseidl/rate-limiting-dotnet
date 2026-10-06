@@ -2,6 +2,8 @@
 
 [English](README.md) | Português
 
+[![CI](https://github.com/ceseidl/rate-limiting-dotnet/actions/workflows/ci.yml/badge.svg)](https://github.com/ceseidl/rate-limiting-dotnet/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 > **Início rápido**
 
 ```bash
@@ -98,3 +100,7 @@ A ordem das respostas concorrentes pode variar. O corpo do `429` é um JSON `Pro
 - [Middleware de rate limiting no ASP.NET Core (Microsoft Learn)](https://learn.microsoft.com/aspnet/core/performance/rate-limit)
 - [`System.Threading.RateLimiting`](https://learn.microsoft.com/dotnet/api/system.threading.ratelimiting)
 - [RFC 6585: 429 Too Many Requests](https://www.rfc-editor.org/rfc/rfc6585)
+
+## Licença
+
+[MIT](LICENSE). Autor: Carlos Eduardo Seidl.

@@ -2,6 +2,8 @@
 
 English | [Português](README.pt-BR.md)
 
+[![CI](https://github.com/ceseidl/rate-limiting-dotnet/actions/workflows/ci.yml/badge.svg)](https://github.com/ceseidl/rate-limiting-dotnet/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 > **Quick start**
 
 ```bash
@@ -98,3 +100,7 @@ The order of the concurrent responses may vary. The `429` body is a `ProblemDeta
 - [Rate limiting middleware in ASP.NET Core (Microsoft Learn)](https://learn.microsoft.com/aspnet/core/performance/rate-limit)
 - [`System.Threading.RateLimiting`](https://learn.microsoft.com/dotnet/api/system.threading.ratelimiting)
 - [RFC 6585: 429 Too Many Requests](https://www.rfc-editor.org/rfc/rfc6585)
+
+## License
+
+[MIT](LICENSE). Author: Carlos Eduardo Seidl.

@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Build
+        run: dotnet build --nologo
+
+      - name: Smoke test (API + demo client)
+        run: |
+          dotnet run --no-build --project src/RateLimitApi > api.log 2>&1 &
+          out=$(timeout 120 dotnet run --no-build --project src/RateLimitDemo)
+          echo "$out"
+          echo "$out" | grep -E 'Fixed window.* 200 200 200 200 200 429 429'
+          echo "$out" | grep -E 'Sliding window.* 200 200 200 200 200 429 429'
+          echo "$out" | grep -E 'free-1.* 200 200 200 429 429'
+          echo "$out" | grep -E 'premium-1.* 200 200 200 200 200$'
+          echo "$out" | grep -E 'saude.* 200 200 200$'
+
+      - name: API log
+        if: always()
+        run: cat api.log || true
