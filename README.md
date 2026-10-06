@@ -40,7 +40,7 @@ src/
 
 ## Run
 
-In one terminal, start the API (listens on `http://localhost:5080`):
+In one terminal, start the API (it listens on `http://localhost:5080`, set in `Properties/launchSettings.json`):
 
 ```bash
 dotnet run --project src/RateLimitApi
@@ -50,6 +50,13 @@ In another terminal, run the demo:
 
 ```bash
 dotnet run --project src/RateLimitDemo
+```
+
+To use another address, pass `--urls` to the API and tell the demo where it is (as an argument or with the `RATE_LIMIT_API_URL` environment variable):
+
+```bash
+dotnet run --project src/RateLimitApi --urls http://localhost:6000
+dotnet run --project src/RateLimitDemo -- http://localhost:6000
 ```
 
 ## Endpoints and policies
@@ -68,7 +75,7 @@ Every route also goes through a **global limiter** of 120 requests per minute pe
 ## Expected output
 
 ```
-Waiting for the API at / Aguardando a API em localhost:5080 ...
+Waiting for the API at / Aguardando a API em http://localhost:5080 ...
 
 Fixed window / Janela fixa (5/10s) x7                         200 200 200 200 200 429 429
                                                               Retry-After: 10s

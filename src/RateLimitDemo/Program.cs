@@ -1,8 +1,14 @@
 using Resposta = (int Codigo, double? Espera);
 
+// EN: API address: first argument, then RATE_LIMIT_API_URL, then the default.
+// PT: Endereço da API: primeiro argumento, depois RATE_LIMIT_API_URL, depois o padrão.
+var baseUrl = args.FirstOrDefault()
+    ?? Environment.GetEnvironmentVariable("RATE_LIMIT_API_URL")
+    ?? "http://localhost:5080";
+
 using var http = new HttpClient
 {
-    BaseAddress = new Uri("http://localhost:5080")
+    BaseAddress = new Uri(baseUrl)
 };
 
 async Task<Resposta> Chamar(string rota, string? chave = null)
@@ -41,7 +47,7 @@ void Mostrar(string titulo, Resposta[] respostas)
 
 Console.WriteLine(
     "Waiting for the API at / "
-    + "Aguardando a API em localhost:5080 ...");
+    + $"Aguardando a API em {baseUrl} ...");
 while (true)
 {
     try { await Chamar("/saude"); break; }
