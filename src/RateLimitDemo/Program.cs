@@ -40,7 +40,8 @@ void Mostrar(string titulo, Resposta[] respostas)
 }
 
 Console.WriteLine(
-    "Waiting for the API at / Aguardando a API em localhost:5080 ...");
+    "Waiting for the API at / "
+    + "Aguardando a API em localhost:5080 ...");
 while (true)
 {
     try { await Chamar("/saude"); break; }
@@ -60,7 +61,9 @@ Mostrar("Token bucket after / após 4.5 s x3",
 
 var paralelas = await Task.WhenAll(
     Enumerable.Range(0, 4).Select(_ => Chamar("/lento")));
-Mostrar("Concurrency / Concorrência (2), 4 parallel / paralelas", paralelas);
+Mostrar(
+    "Concurrency / Concorrência (2), 4 parallel / paralelas",
+    paralelas);
 
 Mostrar("free-1 (3/10s) x5",
     await Sequencia("/cliente", 5, "free-1"));

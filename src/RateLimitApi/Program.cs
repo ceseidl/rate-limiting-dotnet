@@ -8,7 +8,8 @@ builder.Services.AddPoliticasDeLimite();
 var app = builder.Build();
 
 // EN: Order matters: the limiter must come before the endpoints.
-// PT: A ordem importa: o limitador precisa vir antes dos endpoints.
+// PT: A ordem importa: o limitador precisa vir antes dos
+// PT: endpoints.
 app.UseRateLimiter();
 
 static IResult Ok(string politica) => Results.Ok(new

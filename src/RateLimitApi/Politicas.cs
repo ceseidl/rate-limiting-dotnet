@@ -64,7 +64,8 @@ public static class Politicas
             });
 
             // EN: 5. Per client: each key has its own quota.
-            // PT: 5. Por cliente: cada chave tem a sua própria cota.
+            // PT: 5. Por cliente: cada chave tem a sua própria
+            // PT: cota.
             options.AddPolicy(PorCliente, http =>
             {
                 var (chave, limite) = Clientes.Identificar(http);
