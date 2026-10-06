@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.RateLimiting;
 using RateLimitApi;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.WebHost.UseUrls("http://localhost:5080");
 builder.Services.AddPoliticasDeLimite();
 
 var app = builder.Build();

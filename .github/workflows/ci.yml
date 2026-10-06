@@ -34,6 +34,16 @@ jobs:
           echo "$out" | grep -E 'premium-1.* 200 200 200 200 200$'
           echo "$out" | grep -E 'saude.* 200 200 200$'
 
+      - name: Smoke test (custom port)
+        run: |
+          # EN: The API URL is configurable: --urls on the API, RATE_LIMIT_API_URL on the demo.
+          # PT: A URL da API é configurável: --urls na API, RATE_LIMIT_API_URL na demo.
+          dotnet run --no-build --project src/RateLimitApi --urls http://localhost:5081 > api2.log 2>&1 &
+          out=$(RATE_LIMIT_API_URL=http://localhost:5081 timeout 120 dotnet run --no-build --project src/RateLimitDemo)
+          echo "$out"
+          echo "$out" | grep -F 'http://localhost:5081'
+          echo "$out" | grep -E 'Fixed window.* 200 200 200 200 200 429 429'
+
       - name: API log
         if: always()
-        run: cat api.log || true
+        run: cat api.log api2.log || true
