@@ -1,7 +1,9 @@
 using Resposta = (int Codigo, double? Espera);
 
-// EN: API address: first argument, then RATE_LIMIT_API_URL, then the default.
-// PT: Endereço da API: primeiro argumento, depois RATE_LIMIT_API_URL, depois o padrão.
+// EN: API address: first argument, then RATE_LIMIT_API_URL,
+// EN: then the default.
+// PT: Endereço da API: primeiro argumento, depois
+// PT: RATE_LIMIT_API_URL, depois o padrão.
 var baseUrl = args.FirstOrDefault()
     ?? Environment.GetEnvironmentVariable("RATE_LIMIT_API_URL")
     ?? "http://localhost:5080";
